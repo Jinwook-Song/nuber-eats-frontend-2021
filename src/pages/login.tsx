@@ -1,7 +1,9 @@
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
+import Helmet from "react-helmet";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { isLoggedInVar } from "../apollo";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
 import nuberLogo from "../images/logo.svg";
@@ -41,6 +43,7 @@ export const Login = () => {
     } = data;
     if (ok) {
       console.log(token);
+      isLoggedInVar(true);
     } else {
       console.log(error);
     }
@@ -70,6 +73,9 @@ export const Login = () => {
 
   return (
     <div className="h-screen flex items-center flex-col mt-10 lg:mt-28">
+      <Helmet>
+        <title>Login | Nuber Eats</title>
+      </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col items-center px-5">
         <img alt="#" src={nuberLogo} className="w-52 mb-10" />
         <h4 className="w-full font-medium text-left text-3xl mb-5">
@@ -80,8 +86,14 @@ export const Login = () => {
           className="grid gap-3 mt-5 w-full mb-5"
         >
           <input
-            {...register("email", { required: "Email is required" })}
-            name="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                message: "Please enter a valid email",
+              },
+            })}
             type="email"
             placeholder="Email"
             className="input transition-colors"
@@ -94,7 +106,6 @@ export const Login = () => {
               required: "Password is required",
               minLength: 6,
             })}
-            name="password"
             type="password"
             placeholder="Password"
             className="input"

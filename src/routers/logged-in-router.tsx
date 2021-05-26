@@ -1,7 +1,19 @@
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
-import { isLoggedInVar } from "../apollo";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import { Restaurants } from "../pages/client/restaurant";
 import { myProfileQuery } from "../__generated__/myProfileQuery";
+
+const ClientRoutes = [
+  <Route path="/" exact>
+    <Restaurants />
+  </Route>,
+];
 
 const MY_PROFILE_QUERY = gql`
   query myProfileQuery {
@@ -24,9 +36,11 @@ export const LoggedInRouter = () => {
     );
   }
   return (
-    <div>
-      <h1>{data.myProfile.role}</h1>
-      <button onClick={() => isLoggedInVar(false)}>Log Out</button>
-    </div>
+    <Router>
+      <Switch>
+        {data.myProfile.role === "Client" && ClientRoutes}
+        <Redirect to="/" />
+      </Switch>
+    </Router>
   );
 };

@@ -81,7 +81,7 @@ export const CreateAccount = () => {
         <title>Create Account | Nuber Eats</title>
       </Helmet>
       <div className="w-full max-w-screen-sm flex flex-col items-center px-5">
-        <img alt="#" src={nuberLogo} className="w-52 mb-10" />
+        <img alt="Nuber Eats" src={nuberLogo} className="w-52 mb-10" />
         <h4 className="w-full font-medium text-left text-3xl mb-5">
           Let's get started
         </h4>

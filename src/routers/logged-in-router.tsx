@@ -1,13 +1,12 @@
-import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch,
 } from "react-router-dom";
+import { Header } from "../components/header";
+import { useMyProfile } from "../hooks/useMyProfile";
 import { Restaurants } from "../pages/client/restaurant";
-import { myProfileQuery } from "../__generated__/myProfileQuery";
 
 const ClientRoutes = [
   <Route path="/" exact>
@@ -15,19 +14,9 @@ const ClientRoutes = [
   </Route>,
 ];
 
-const MY_PROFILE_QUERY = gql`
-  query myProfileQuery {
-    myProfile {
-      id
-      email
-      role
-      verified
-    }
-  }
-`;
-
 export const LoggedInRouter = () => {
-  const { data, loading, error } = useQuery<myProfileQuery>(MY_PROFILE_QUERY);
+  // from api
+  const { data, loading, error } = useMyProfile();
   if (!data || loading || error) {
     return (
       <div className="h-screen flex justify-center items-center">
@@ -37,6 +26,7 @@ export const LoggedInRouter = () => {
   }
   return (
     <Router>
+      <Header />
       <Switch>
         {data.myProfile.role === "Client" && ClientRoutes}
         <Redirect to="/" />

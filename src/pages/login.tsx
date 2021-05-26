@@ -1,11 +1,12 @@
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
-import Helmet from "react-helmet";
+import {Helmet} from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { isLoggedInVar } from "../apollo";
+import { authToken, isLoggedInVar } from "../apollo";
 import { Button } from "../components/button";
 import { FormError } from "../components/form-error";
+import { LS_TOKEN } from "../constants";
 import nuberLogo from "../images/logo.svg";
 import {
   loginMutation,
@@ -41,8 +42,10 @@ export const Login = () => {
     const {
       login: { error, ok, token },
     } = data;
-    if (ok) {
-      console.log(token);
+    if (ok && token) {
+      localStorage.setItem(LS_TOKEN, token);
+      // reactive variable
+      authToken(token);
       isLoggedInVar(true);
     } else {
       console.log(error);

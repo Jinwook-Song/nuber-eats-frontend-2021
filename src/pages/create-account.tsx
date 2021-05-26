@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
-import Helmet from "react-helmet";
+import {Helmet} from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../components/button";
@@ -46,6 +46,7 @@ export const CreateAccount = () => {
       createAccount: { ok, error },
     } = data;
     if (ok) {
+      alert("Account Create! Log in now!")
       // redirect to login page
       history.push("/login");
     } else {

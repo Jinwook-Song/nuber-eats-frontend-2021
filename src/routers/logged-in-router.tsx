@@ -6,10 +6,11 @@ import { Restaurants } from "../pages/client/restaurant";
 import { ConfirmEmail } from "../pages/user/confirm-email";
 
 const ClientRoutes = [
-  <Route path="/" exact>
+  // array must have keys
+  <Route key={1} path="/" exact>
     <Restaurants />
   </Route>,
-  <Route path="/confirm" exact>
+  <Route key={2} path="/confirm" exact>
     <ConfirmEmail />
   </Route>,
 ];

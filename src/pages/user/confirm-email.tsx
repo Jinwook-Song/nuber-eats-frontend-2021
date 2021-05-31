@@ -1,5 +1,6 @@
 import { gql, useApolloClient, useMutation } from "@apollo/client";
 import React, { useEffect } from "react";
+import { useHistory } from "react-router";
 import { useMyProfile } from "../../hooks/useMyProfile";
 import {
   verifyEmail,
@@ -18,6 +19,7 @@ const VERIFY_EMAIL_MUTATION = gql`
 export const ConfirmEmail = () => {
   const { data: userData } = useMyProfile();
   const client = useApolloClient();
+  const history = useHistory();
   const onCompleted = (data: verifyEmail) => {
     const {
       verifyEmail: { ok },
@@ -26,16 +28,19 @@ export const ConfirmEmail = () => {
       // write to the cache
       client.writeFragment({
         id: `User:${userData.myProfile.id}`,
+        // type 지정
         fragment: gql`
           fragment VerifiedUser on User {
             verified
           }
         `,
+        // date 수정
         data: {
           verified: true,
         },
       });
     }
+    history.push("/");
   };
   const [verifyEmail] = useMutation<verifyEmail, verifyEmailVariables>(
     VERIFY_EMAIL_MUTATION,

@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import { myProfileQuery } from "../__generated__/myProfileQuery";
 
-const MY_PROFILE_QUERY = gql`
+export const MY_PROFILE_QUERY = gql`
   query myProfileQuery {
     myProfile {
       id

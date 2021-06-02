@@ -48,7 +48,7 @@ export const Login = () => {
       authToken(token);
       isLoggedInVar(true);
     } else {
-      // console.log(error);
+      console.log(error);
     }
   };
 

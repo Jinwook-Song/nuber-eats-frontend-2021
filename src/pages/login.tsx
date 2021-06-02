@@ -13,7 +13,7 @@ import {
   loginMutationVariables,
 } from "../__generated__/loginMutation";
 
-const LOGIN_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
   mutation loginMutation($loginInput: LoginInput!) {
     login(input: $loginInput) {
       ok
@@ -107,7 +107,7 @@ export const Login = () => {
           <input
             {...register("password", {
               required: "Password is required",
-              minLength: 6,
+              // minLength: 6,
             })}
             type="password"
             placeholder="Password"
@@ -116,9 +116,9 @@ export const Login = () => {
           {errors.password?.message && (
             <FormError errorMessage={errors.password?.message} />
           )}
-          {errors.password?.type === "minLength" && (
+          {/* {errors.password?.type === "minLength" && (
             <FormError errorMessage="Password must be more than 6 char." />
-          )}
+          )} */}
           <Button //
             canClick={isValid}
             loading={loading}

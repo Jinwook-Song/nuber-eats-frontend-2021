@@ -9,6 +9,7 @@ import userEvent from "@testing-library/user-event";
 describe("<Login />", () => {
   let renderResult: RenderResult;
   let mockedClient: MockApolloClient;
+
   beforeEach(async () => {
     await waitFor(async () => {
       mockedClient = createMockClient();
@@ -23,11 +24,13 @@ describe("<Login />", () => {
       );
     });
   });
+
   it("should render OK", async () => {
     await waitFor(() => {
       expect(document.title).toBe("Login | Nuber Eats");
     });
   });
+
   it("displays email validation errors", async () => {
     const { getByPlaceholderText, getByRole } = renderResult;
     const email = getByPlaceholderText(/email/i);
@@ -42,6 +45,7 @@ describe("<Login />", () => {
     errorMessage = getByRole("alert");
     expect(errorMessage).toHaveTextContent(/email is required/i);
   });
+
   it("display password required errors", async () => {
     const { getByPlaceholderText, getByRole } = renderResult;
     const email = getByPlaceholderText(/email/i);
@@ -53,6 +57,7 @@ describe("<Login />", () => {
     const errorMessage = getByRole("alert");
     expect(errorMessage).toHaveTextContent(/password is required/i);
   });
+
   it("submits form and calls mutation", async () => {
     const { getByPlaceholderText, getByRole } = renderResult;
     const email = getByPlaceholderText(/email/i);
@@ -67,11 +72,12 @@ describe("<Login />", () => {
         login: {
           ok: true,
           token: "XXX",
-          error: null,
+          error: "mutation-error",
         },
       },
     });
     mockedClient.setRequestHandler(LOGIN_MUTATION, mockedMutationResponse);
+    jest.spyOn(Storage.prototype, "setItem");
     await waitFor(() => {
       userEvent.type(email, formData.email);
       userEvent.type(password, formData.password);
@@ -84,5 +90,8 @@ describe("<Login />", () => {
         password: formData.password,
       },
     });
+    const errorMessage = getByRole("alert");
+    expect(errorMessage).toHaveTextContent(/mutation-error/i);
+    expect(localStorage.setItem).toHaveBeenCalledWith("nuber-token", "XXX");
   });
 });

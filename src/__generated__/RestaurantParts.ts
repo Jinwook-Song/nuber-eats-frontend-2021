@@ -19,4 +19,5 @@ export interface RestaurantParts {
   coverImg: string;
   category: RestaurantParts_category | null;
   address: string;
+  isPromoted: boolean;
 }

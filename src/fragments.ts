@@ -10,6 +10,7 @@ export const RESTAURANT_FRAGMENT = gql`
       name
     }
     address
+    isPromoted
   }
 `;
 

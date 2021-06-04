@@ -21,6 +21,7 @@ export interface searchRestaurant_searchRestaurant_restaurants {
   coverImg: string;
   category: searchRestaurant_searchRestaurant_restaurants_category | null;
   address: string;
+  isPromoted: boolean;
 }
 
 export interface searchRestaurant_searchRestaurant {

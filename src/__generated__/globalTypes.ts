@@ -28,7 +28,7 @@ export interface CreateRestaurantInput {
   name: string;
   coverImg: string;
   address?: string | null;
-  categoryNamge: string;
+  categoryName: string;
 }
 
 export interface EditProfileInput {

@@ -7,6 +7,7 @@ import { Restaurant } from "../pages/client/restaurant";
 import { Restaurants } from "../pages/client/restaurants";
 import { Search } from "../pages/client/search";
 import { AddRestaurant } from "../pages/owner/add-restaurant";
+import { AddDish } from "../pages/owner/add.dish";
 import { MyRestaurant } from "../pages/owner/my-restaurant";
 import { MyRestaurants } from "../pages/owner/my-restaurants";
 import { ConfirmEmail } from "../pages/user/confirm-email";
@@ -54,6 +55,10 @@ const restaurantRoutes = [
   {
     path: "/restaurants/:id",
     component: <MyRestaurant />,
+  },
+  {
+    path: "/restaurants/:id/add-dish",
+    component: <AddDish />,
   },
 ];
 

@@ -2,11 +2,13 @@ import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import { Link, useParams } from "react-router-dom";
 import { Dish } from "../../components/dish";
+import { VictoryAxis, VictoryBar, VictoryChart } from "victory";
 import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from "../../fragments";
 import {
   myRestaurant,
   myRestaurantVariables,
 } from "../../__generated__/myRestaurant";
+import { Helmet } from "react-helmet-async";
 
 export const MY_RESTAURANT_QUERY = gql`
   query myRestaurant($input: MyRestaurantInput!) {
@@ -44,6 +46,12 @@ export const MyRestaurant = () => {
   console.log(data);
   return (
     <div>
+      <Helmet>
+        <title>
+          {data?.myRestaurant.restaurant?.name || "Loading..."} | Nuber Eats
+        </title>
+        <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
+      </Helmet>
       <div
         className=" bg-gray-700 py-28 bg-center bg-cover"
         style={{
@@ -77,6 +85,27 @@ export const MyRestaurant = () => {
               ))}
             </div>
           )}
+        </div>
+        <div className="mt-20 mb-10">
+          <h4 className="text-center text-2xl font-medium">Sales</h4>
+          <div className="max-w-lg w-full mx-auto">
+            <VictoryChart domainPadding={20}>
+              <VictoryAxis
+                dependentAxis
+                label="Amount of Money"
+                tickValues={[20, 30, 40, 50, 60]}
+              />
+              <VictoryAxis label="Days of Life" />
+              <VictoryBar
+                data={[
+                  { x: 10, y: 20 },
+                  { x: 20, y: 5 },
+                  { x: 35, y: -10 },
+                  { x: 45, y: 40 },
+                ]}
+              />
+            </VictoryChart>
+          </div>
         </div>
       </div>
     </div>

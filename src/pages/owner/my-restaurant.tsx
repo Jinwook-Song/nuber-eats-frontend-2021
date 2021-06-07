@@ -69,7 +69,6 @@ export const MyRestaurant = () => {
         <title>
           {data?.myRestaurant.restaurant?.name || "Loading..."} | Nuber Eats
         </title>
-        <script src="https://cdn.paddle.com/paddle/paddle.js"></script>
       </Helmet>
       <div
         className=" bg-gray-700 py-28 bg-center bg-cover"

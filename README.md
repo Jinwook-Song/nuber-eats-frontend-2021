@@ -10,3 +10,5 @@
 - edit restaurant
 
 - add choice options in create dish
+
+- if order exist, show the order details

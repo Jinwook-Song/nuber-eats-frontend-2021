@@ -6,9 +6,17 @@ interface ICoords {
   lng: number;
 }
 
+interface IDriverProps {
+  lat: number;
+  lng: number;
+  $hover?: any;
+}
+
+const Driver: React.FC<IDriverProps> = () => <div className="text-lg">🚴‍♀️</div>;
+
 export const Dashboard = () => {
   const [driverCoords, setDriverCoords] = useState<ICoords>({ lat: 0, lng: 0 });
-  const [map, setMap] = useState<any>();
+  const [map, setMap] = useState<google.maps.Map>();
   const [maps, setMaps] = useState<any>();
   const onSuccess = ({
     coords: { latitude, longitude },
@@ -25,11 +33,20 @@ export const Dashboard = () => {
   }, []);
   useEffect(() => {
     if (map && maps) {
-      map.panTo(new maps.LatLng(driverCoords.lat, driverCoords.lng));
+      map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode(
+        {
+          location: new google.maps.LatLng(driverCoords.lat, driverCoords.lng),
+        },
+        (results, status) => {
+          console.log(status, results);
+        }
+      );
     }
   }, [driverCoords.lat, driverCoords.lng]);
   const onApiLoaded = ({ map, maps }: { map: any; maps: any }) => {
-    map.panTo(new maps.LatLng(driverCoords.lat, driverCoords.lng));
+    map.panTo(new google.maps.LatLng(driverCoords.lat, driverCoords.lng));
     setMap(map);
     setMaps(maps);
   };
@@ -46,14 +63,7 @@ export const Dashboard = () => {
           defaultCenter={{ lat: 36.56, lng: 127.04 }}
           bootstrapURLKeys={{ key: "AIzaSyACY9PPICeYtG6F9VR_XWKDPtWbAhiOnA4" }}
         >
-          <div
-            // @ts-ignore
-            lat={driverCoords.lat}
-            lng={driverCoords.lng}
-            className="text-lg"
-          >
-            🚴‍♀️
-          </div>
+          <Driver lat={driverCoords.lat} lng={driverCoords.lng} />
         </GoogleMapReact>
       </div>
     </div>

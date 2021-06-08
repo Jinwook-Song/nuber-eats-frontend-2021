@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { useParams } from "react-router";
 import { FULL_ORDER_FRAGMENT } from "../../fragments";
+import { useMyProfile } from "../../hooks/useMyProfile";
 import { getOrder, getOrderVariables } from "../../__generated__/getOrder";
 import {
   orderUpdates,
@@ -38,6 +39,7 @@ interface Iparams {
 
 export const Order = () => {
   const params = useParams<Iparams>();
+  const { data: userData } = useMyProfile();
   const { data, subscribeToMore } = useQuery<getOrder, getOrderVariables>(
     GET_ORDER,
     {
@@ -109,9 +111,21 @@ export const Order = () => {
               {data?.getOrder.order?.driver?.email || "Not yet."}
             </span>
           </div>
-          <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
-            Status: {data?.getOrder.order?.status}
-          </span>
+          {userData?.myProfile.role === "Client" && (
+            <span className=" text-center mt-5 mb-3  text-2xl text-lime-600">
+              Status: {data?.getOrder.order?.status}
+            </span>
+          )}
+          {userData?.myProfile.role === "Owner" && (
+            <>
+              {data?.getOrder.order?.status === "Pending" && (
+                <button className="btn">Accept order</button>
+              )}
+              {data?.getOrder.order?.status === "Cooking" && (
+                <button className="">Order Cooked</button>
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

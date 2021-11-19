@@ -17,9 +17,10 @@ export const isLoggedInVar = makeVar(Boolean(token));
 export const authToken = makeVar(token);
 
 const wsLink = new WebSocketLink({
-  process.env.NODE_ENV === "production"
-  ? "wss://nuber-eats-backend-2021.herokuapp.com/graphql"
-  : `ws://localhost:4000/graphql`,
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "wss://nuber-eats-backend-2021.herokuapp.com/graphql"
+      : `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
     connectionParams: {

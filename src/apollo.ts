@@ -20,7 +20,7 @@ const wsLink = new WebSocketLink({
   uri:
     process.env.NODE_ENV === "production"
       ? "wss://nuber-eats-backend-2021.herokuapp.com/graphql"
-      : `ws://localhost:4000/graphql`,
+      : `ws://localhost:5000/graphql`,
   options: {
     reconnect: true,
     connectionParams: {
@@ -33,7 +33,7 @@ const httpLink = createHttpLink({
   uri:
     process.env.NODE_ENV === "production"
       ? "https://nuber-eats-backend-2021.herokuapp.com/graphql"
-      : "http://localhost:4000/graphql",
+      : "http://localhost:5000/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {

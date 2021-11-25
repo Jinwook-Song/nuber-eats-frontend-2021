@@ -131,6 +131,9 @@ export const AddRestaurant = () => {
           placeholder="Name"
           type="text"
         />
+        {errors.name?.type === "minLength" && (
+          <FormError errorMessage="Name must be more than 5 char." />
+        )}
         <input
           className="input"
           {...register("address", { required: "Address is required." })}

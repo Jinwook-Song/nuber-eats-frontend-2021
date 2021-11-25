@@ -141,6 +141,7 @@
 - [ ] add choice options in create dish
 - [ ] if order exist, show the order details
 - [ ] add delivery address to the order
+- [ ] logout
 
 ## 🚀 Deployment
 

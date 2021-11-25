@@ -127,7 +127,7 @@ export const AddRestaurant = () => {
       >
         <input
           className="input"
-          {...register("name", { required: "Name is required." })}
+          {...register("name", { required: "Name is required.", minLength: 5 })}
           placeholder="Name"
           type="text"
         />
